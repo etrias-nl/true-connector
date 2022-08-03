@@ -1,0 +1,38 @@
+name: Unit Tests
+on:
+    pull_request:
+        branches: [ main ]
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            -   uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '7.4'
+                    extensions: mbstring, intl
+                    ini-values: post_max_size=256M, max_execution_time=180
+                    coverage: xdebug
+
+            -   name: Cache Composer packages
+                id: composer-cache
+                uses: actions/cache@v2
+                with:
+                    path: vendor
+                    key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+                    restore-keys: |
+                        ${{ runner.os }}-php-
+
+            -   name: Install dependencies
+                run: |
+                    composer install --prefer-dist --no-progress --no-scripts --no-plugins -n
+                    composer -dtools/phpunit install --prefer-dist --no-progress --no-scripts --no-plugins -n
+
+            -   name: Run unit tests
+                env:
+                    TRUE_API_CLIENT_ID: ${{ secrets.TRUE_API_CLIENT_ID }}
+                    TRUE_API_CLIENT_SECRET: ${{ secrets.TRUE_API_CLIENT_SECRET }}
+                run: tools/phpunit/vendor/bin/phpunit

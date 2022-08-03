@@ -1,0 +1,5 @@
+{
+    "require": {
+        "overtrue/phplint": "^2.3"
+    }
+}

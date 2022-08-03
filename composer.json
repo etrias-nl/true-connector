@@ -1,0 +1,48 @@
+{
+    "name": "etrias/true-connector",
+    "description": "True Connector",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Christ-Jan Prinse",
+            "email": "christ-jan@etrias.nl"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "jms/serializer": "^3.1",
+        "php-http/client-common": "^2.0",
+        "php-http/discovery": "^1.6",
+        "kamermans/guzzle-oauth2-subscriber": "^1.0"
+    },
+    "require-dev": {
+        "doctrine/cache": "^1.10",
+        "nyholm/psr7": "^1.2",
+        "php-http/guzzle6-adapter": "^2.0",
+        "symfony/yaml": "^4.4|^5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Etrias\\TrueConnector\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Etrias\\TrueConnector\\": "tests/functional/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@tools:install"
+        ],
+        "tools:install": [
+            "composer -dtools/php-cs-fixer install --prefer-dist --no-progress --no-scripts --no-plugins -n",
+            "composer -dtools/phplint install --prefer-dist --no-progress --no-scripts --no-plugins -n",
+            "composer -dtools/phpunit install --prefer-dist --no-progress --no-scripts --no-plugins -n"
+        ],
+        "cs:check": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --ansi --dry-run",
+        "cs:fix": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --ansi",
+        "lint:php": "tools/phplint/vendor/bin/phplint src tests",
+        "test:unit": "tools/phpunit/vendor/bin/phpunit"
+    }
+}

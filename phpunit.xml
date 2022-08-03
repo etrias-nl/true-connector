@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/sebastianbergmann/phpunit/master/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         verbose="true"
+         cacheResultFile="var/.phpunit.cache"
+         failOnRisky="true"
+         failOnWarning="true">
+    <php>
+        <env name="TRUE_API_ACCOUNTS_BASE_URI" value="https://accounts.true.nl/api"/>
+        <env name="TRUE_API_SSL_BASE_URI" value="https://ssl.true.nl/api"/>
+        <env name="TRUE_API_SCOPES" value="ssl,dns,domains"/>
+        <env name="TRUE_API_CLIENT_ID" value=""/>
+        <env name="TRUE_API_CLIENT_SECRET" value=""/>
+        <env name="TRUE_API_CUSTOMER_ID" value=""/>
+    </php>
+    <testsuites>
+        <testsuite name="functional">
+            <directory>tests/functional</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
