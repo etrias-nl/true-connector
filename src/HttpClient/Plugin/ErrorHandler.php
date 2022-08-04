@@ -18,6 +18,8 @@ class ErrorHandler implements Plugin
             $status = $response->getStatusCode();
 
             if ($status >= 400) {
+                $body = (string) $response->getBody();
+                
                 if (!preg_match('/\bjson\b/i', $response->getHeaderLine('Content-Type'))) {
                     throw new TrueException($body, $status);
                 }
